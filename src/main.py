@@ -7,7 +7,7 @@ def main(page: ft.Page):
     page.theme_mode = ft.ThemeMode.LIGHT
     page.theme = ft.Theme(color_scheme_seed=ft.Colors.RED)
     page.title = "Consulta de Producto"
-    page.padding = 30
+    page.padding = 0
 
     logo = ft.Image(
     src="https://github.com/bictorrrr/Links_Recursos/blob/main/images.png?raw=true",  # Asegúrate de que el logo esté en una URL accesible públicamente
