@@ -9,8 +9,17 @@ def main(page: ft.Page):
     page.title = "Consulta de Producto"
     page.padding = 30
 
-    titulo = ft.Text("Buscar Producto por Código", size=28, weight=ft.FontWeight.BOLD)
-    codigo_input = ft.TextField(label="Código del producto", width=300)
+    titulo = ft.Text("Buscar Producto por Código", size=28, weight=ft.FontWeight.BOLD, color=ft.colors.WHITE)
+    codigo_input = ft.TextField(label="Código del producto", width=1000, color=ft.colors.WHITE, border_color=ft.colors.WHITE, cursor_color=ft.colors.WHITE)
+    encabezado = ft.Container(
+        content=ft.Column([
+            titulo,
+            codigo_input
+        ]),
+        padding=20,
+        bgcolor=ft.colors.BLUE_400,
+        border_radius=ft.BorderRadius(top_left=0, top_right=0, bottom_left= 20, bottom_right= 20),  # Esquinas inferiores redondeadas
+    )
     resultado_card = ft.Container()
 
     def buscar_producto(e):
@@ -51,8 +60,7 @@ def main(page: ft.Page):
 
     page.add(
         ft.Column([
-            titulo,
-            codigo_input,
+            encabezado,
             ft.ElevatedButton("Buscar", on_click=buscar_producto),
             resultado_card
         ], spacing=20)
