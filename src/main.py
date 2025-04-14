@@ -7,10 +7,10 @@ def main(page: ft.Page):
     page.theme_mode = ft.ThemeMode.LIGHT
     page.theme = ft.Theme(color_scheme_seed=ft.Colors.RED)
     page.title = "Consulta de Producto"
-    page.padding = 0
+    page.padding = 10
 
     logo = ft.Image(
-    src="https://github.com/bictorrrr/Links_Recursos/blob/main/images.png?raw=true",  # Asegúrate de que el logo esté en una URL accesible públicamente
+    src="https://i.ibb.co/8LxBQKh2/images.png",  # Asegúrate de que el logo esté en una URL accesible públicamente
     width=60,
     height=60,
     fit=ft.ImageFit.CONTAIN
