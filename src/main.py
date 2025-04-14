@@ -61,7 +61,7 @@ def main(page: ft.Page):
     page.add(
         ft.Column([
             encabezado,
-            ft.ElevatedButton("Buscar", on_click=buscar_producto),
+            ft.ElevatedButton("Buscar", on_click=buscar_producto, width=1000, height=40, icon=ft.icons.SEARCH),
             resultado_card
         ], spacing=20)
     )
