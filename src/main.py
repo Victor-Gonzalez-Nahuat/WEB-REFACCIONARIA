@@ -1,26 +1,24 @@
 import flet as ft
-
+import requests
 
 def main(page: ft.Page):
-    counter = ft.Text("0", size=50, data=0)
+    response = requests.get("https://api-refaccionaria-production.up.railway.app/productos/")
+    productos = response.json()
 
-    def increment_click(e):
-        counter.data += 1
-        counter.value = str(counter.data)
-        counter.update()
+    page.add(ft.Text("Lista de Productos", size=30, weight=ft.FontWeight.BOLD))
 
-    page.floating_action_button = ft.FloatingActionButton(
-        icon=ft.Icons.ADD, on_click=increment_click
-    )
-    page.add(
-        ft.SafeArea(
-            ft.Container(
-                counter,
-                alignment=ft.alignment.center,
-            ),
-            expand=True,
-        )
-    )
+    productos_text = []
+    for producto in productos:
+        producto_str = f"Producto: {producto['nombre']} | Código: {producto['codigo']}"
+        productos_text.append(ft.Text(producto_str, size=20))
 
+    page.add(ft.Column(
+        controls=productos_text,
+        spacing=10,
+        alignment=ft.MainAxisAlignment.CENTER
+    ))
+
+    page.background = ft.colors.LIGHT_BLUE
+    page.padding = 20
 
 ft.app(main)
