@@ -5,19 +5,36 @@ API_URL = "https://api-refaccionaria-production.up.railway.app/producto/"
 
 def main(page: ft.Page):
     page.theme_mode = ft.ThemeMode.LIGHT
-
+    page.theme = ft.Theme(color_scheme_seed=ft.Colors.RED)
     page.title = "Consulta de Producto"
     page.padding = 30
 
+    logo = ft.Image(
+    src="https://github.com/bictorrrr/Links_Recursos/blob/main/images.png?raw=true",  # Asegúrate de que el logo esté en una URL accesible públicamente
+    width=60,
+    height=60,
+    fit=ft.ImageFit.CONTAIN
+    )
+
+    titulo_empresa = ft.Text(
+        "REFACCIONARIA FALLA",
+        size=26,
+        weight=ft.FontWeight.BOLD,
+        color=ft.colors.WHITE
+    )
     titulo = ft.Text("Buscar Producto por Código", size=28, weight=ft.FontWeight.BOLD, color=ft.colors.WHITE)
     codigo_input = ft.TextField(label="Código del producto", width=1000, color=ft.colors.WHITE, border_color=ft.colors.WHITE, cursor_color=ft.colors.WHITE)
     encabezado = ft.Container(
         content=ft.Column([
+            ft.Row([
+                logo,
+                titulo_empresa
+            ]),
             titulo,
             codigo_input
         ]),
         padding=20,
-        bgcolor=ft.colors.BLUE_400,
+        bgcolor="#e9423a",
         border_radius=ft.BorderRadius(top_left=0, top_right=0, bottom_left= 20, bottom_right= 20),  # Esquinas inferiores redondeadas
     )
     resultado_card = ft.Container()
