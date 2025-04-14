@@ -4,6 +4,8 @@ import requests
 API_URL = "https://api-refaccionaria-production.up.railway.app/producto/"
 
 def main(page: ft.Page):
+    page.theme_mode = ft.ThemeMode.LIGHT
+
     page.title = "Consulta de Producto"
     page.padding = 30
 
