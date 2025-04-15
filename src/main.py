@@ -9,6 +9,8 @@ def main(page: ft.Page):
     page.title = "Consulta de Producto"
     page.padding = 10
 
+    
+
     logo = ft.Image(
     src="https://i.ibb.co/8LxBQKh2/images.png",  # Asegúrate de que el logo esté en una URL accesible públicamente
     width=60,
@@ -24,6 +26,8 @@ def main(page: ft.Page):
     )
     titulo = ft.Text("Buscar Producto por Código", size=28, weight=ft.FontWeight.BOLD, color=ft.colors.WHITE)
     codigo_input = ft.TextField(label="Código del producto", width=1000, color=ft.colors.WHITE, border_color=ft.colors.WHITE, cursor_color=ft.colors.WHITE)
+    nombre_input = ft.TextField(label="Nombre del producto", width=400)
+    
     encabezado = ft.Container(
         content=ft.Column([
             ft.Row([
@@ -74,11 +78,73 @@ def main(page: ft.Page):
             resultado_card.content = ft.Text(f"🚫 Error al conectar con la API: {str(ex)}", size=16)
 
         page.update()
+    
+    def copiar_al_portapapeles(codigo):
+        page.set_clipboard(codigo)
+        snack_bar = ft.SnackBar(
+        content=ft.Text("✅ Código copiado al portapapeles."),
+        bgcolor=ft.colors.GREEN
+        )
+        page.open(snack_bar)
+        page.update()
 
+    def buscar_por_nombre(nombre):
+        if not nombre.strip():
+            resultado_card.content = ft.Text("⚠️ Por favor, introduce un nombre válido.", size=16)
+            cerrar_dialogo()
+            page.update()
+            return
+
+        try:
+            res = requests.get(API_URL + f"nombre/{nombre}")
+            if res.status_code == 200:
+                data = res.json()
+                resultado_card.content = ft.Card(
+                    content=ft.Container(
+                        content=ft.Column([
+                            ft.Text(f"🛠 Nombre: {data['nombre']}", size=20, weight=ft.FontWeight.BOLD),
+                            ft.Text(f"🔢 Código: {data['codigo']}"),
+                            ft.ElevatedButton("Copiar codigo", on_click= lambda e: copiar_al_portapapeles(data['codigo']))
+                        ]),
+                        padding=20,
+                    ),
+                    elevation=4,
+                )
+            else:
+                resultado_card.content = ft.Text("❌ Producto no encontrado por nombre.", size=16)
+        except Exception as ex:
+            resultado_card.content = ft.Text(f"🚫 Error al conectar con la API: {str(ex)}", size=16)
+        page.close(dialogo_busqueda)
+        nombre_input.value = ""
+        cerrar_dialogo()
+        page.update()
+
+    def abrir_dialogo(e):
+        page.open(dialogo_busqueda)
+        page.update()
+
+    def cerrar_dialogo():
+        page.close(dialogo_busqueda)
+        page.update()
+
+    botones = ft.Row([
+        ft.ElevatedButton("Buscar", on_click=buscar_producto, width=200, height=40, icon=ft.icons.SEARCH),
+        ft.ElevatedButton("Buscar codigo", on_click=abrir_dialogo, width=200, height=40, icon=ft.icons.SEARCH)
+    ])
+    dialogo_busqueda = ft.AlertDialog(
+        modal=True,
+        title=ft.Text("Buscar por nombre"),
+        content=ft.Column([
+            nombre_input,
+            ft.ElevatedButton("Buscar", on_click=lambda e: buscar_por_nombre(nombre_input.value), icon=ft.icons.SEARCH)
+        ], tight=True),
+        actions=[ft.TextButton("Cerrar", on_click=lambda e: cerrar_dialogo())],
+        actions_alignment=ft.MainAxisAlignment.END,
+    )
     page.add(
         ft.Column([
             encabezado,
-            ft.ElevatedButton("Buscar", on_click=buscar_producto, width=1000, height=40, icon=ft.icons.SEARCH),
+            botones,
             resultado_card
         ], spacing=20)
     )
