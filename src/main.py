@@ -12,7 +12,7 @@ def main(page: ft.Page):
     
 
     logo = ft.Image(
-    src="https://i.ibb.co/8LxBQKh2/images.png",  # Asegúrate de que el logo esté en una URL accesible públicamente
+    src="https://i.ibb.co/8LxBQKh2/images.png", 
     width=60,
     height=60,
     fit=ft.ImageFit.CONTAIN
@@ -41,7 +41,15 @@ def main(page: ft.Page):
         bgcolor="#e9423a",
         border_radius=ft.BorderRadius(top_left=0, top_right=0, bottom_left= 20, bottom_right= 20),  # Esquinas inferiores redondeadas
     )
-    resultado_card = ft.Container()
+    resultado_card = ft.Container(
+        ft.Row([
+            ft.Image(
+            src="https://i.ibb.co/8LxBQKh2/images.png", 
+            width=250,
+            height=250,
+            fit=ft.ImageFit.CONTAIN
+            )
+        ], alignment=ft.MainAxisAlignment.CENTER))
 
     def formatear_fecha(fecha_str):
         if not fecha_str or len(fecha_str) != 6:
