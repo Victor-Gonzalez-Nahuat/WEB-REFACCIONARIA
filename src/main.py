@@ -43,6 +43,19 @@ def main(page: ft.Page):
     )
     resultado_card = ft.Container()
 
+    def formatear_fecha(fecha_str):
+        if not fecha_str or len(fecha_str) != 6:
+            return "Fecha no válida"
+        try:
+            anio = int(fecha_str[:2])
+            mes = int(fecha_str[2:4])
+            dia = int(fecha_str[4:])
+            anio += 2000
+            return f"{dia:02d}/{mes:02d}/{anio}"
+        except:
+            return "Fecha inválida"
+
+
     def buscar_producto(e):
         codigo = codigo_input.value.strip()
         if not codigo:
@@ -65,7 +78,8 @@ def main(page: ft.Page):
                             ft.Text(f"💲 Precio: ${data['precio']:.2f}"),
                             ft.Text(f"📦 Existencia: {data['existencia']}"),
                             ft.Text(f"🧾 Último costo: ${data['ultimo_costo']:.2f}"),
-                            ft.Text(f"📅 Última venta: {data['ultima_venta']}"),
+                            ft.Text(f"📅 Última venta: {formatear_fecha(data['ultima_venta'])}"),
+                            ft.Text(f"📅 Última compra: {formatear_fecha(data['ultima_compra'])}"),
                             ft.Text(f"🏭 Proveedor: {data['proveedor']}"),
                         ]),
                         padding=20,
@@ -128,15 +142,15 @@ def main(page: ft.Page):
         page.update()
 
     botones = ft.Row([
-        ft.ElevatedButton("Buscar", on_click=buscar_producto, width=200, height=40, icon=ft.icons.SEARCH),
-        ft.ElevatedButton("Buscar codigo", on_click=abrir_dialogo, width=200, height=40, icon=ft.icons.SEARCH)
-    ])
+        ft.ElevatedButton("Buscar", on_click=buscar_producto, width=180, height=40, icon=ft.icons.SEARCH),
+        ft.ElevatedButton("Buscar codigo", on_click=abrir_dialogo, width=180, height=40, icon=ft.icons.SEARCH)
+    ], alignment=ft.MainAxisAlignment.CENTER)
     dialogo_busqueda = ft.AlertDialog(
         modal=True,
         title=ft.Text("Buscar por nombre"),
         content=ft.Column([
             nombre_input,
-            ft.ElevatedButton("Buscar", on_click=lambda e: buscar_por_nombre(nombre_input.value), icon=ft.icons.SEARCH)
+            ft.ElevatedButton("Buscar", width=500, height=40, on_click=lambda e: buscar_por_nombre(nombre_input.value), icon=ft.icons.SEARCH)
         ], tight=True),
         actions=[ft.TextButton("Cerrar", on_click=lambda e: cerrar_dialogo())],
         actions_alignment=ft.MainAxisAlignment.END,
