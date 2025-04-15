@@ -118,7 +118,7 @@ def main(page: ft.Page):
                         content=ft.Column([
                             ft.Text(f"🛠 Nombre: {data['nombre']}", size=20, weight=ft.FontWeight.BOLD),
                             ft.Text(f"🔢 Código: {data['codigo']}"),
-                            ft.ElevatedButton("Copiar codigo", on_click= lambda e: copiar_al_portapapeles(data['codigo']))
+                            ft.ElevatedButton("Copiar codigo", icon=ft.icons.COPY, icon_color=ft.colors.WHITE, width=500, height=40, bgcolor=ft.colors.AMBER, color=ft.colors.WHITE, on_click= lambda e: copiar_al_portapapeles(data['codigo']))
                         ]),
                         padding=20,
                     ),
