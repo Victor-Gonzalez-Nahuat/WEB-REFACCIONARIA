@@ -56,8 +56,8 @@ def main(page: ft.Page):
             return "Fecha inválida"
 
 
-    def buscar_producto(e):
-        codigo = codigo_input.value.strip()
+    def buscar_producto(codigo):
+        
         if not codigo:
             resultado_card.content = ft.Text("⚠️ Por favor, introduce un código válido.", size=16)
             page.update()
@@ -134,15 +134,16 @@ def main(page: ft.Page):
                             content=ft.Column([
                                 ft.Text(f"🛠 Nombre: {producto['nombre']}", size=18, weight=ft.FontWeight.BOLD),
                                 ft.Text(f"🔢 Código: {producto['codigo']}"),
+                                
                                 ft.ElevatedButton(
-                                    "Copiar código",
-                                    icon=ft.icons.COPY,
+                                    "Seleccionar producto",
+                                    icon=ft.icons.SELECT_ALL,
                                     icon_color=ft.colors.WHITE,
                                     width=400,
                                     height=40,
-                                    bgcolor=ft.colors.AMBER,
+                                    bgcolor=ft.colors.GREEN,
                                     color=ft.colors.WHITE,
-                                    on_click=lambda e, c=producto['codigo']: copiar_al_portapapeles(c)
+                                    on_click=lambda e, c=producto['codigo']: buscar_producto(c)
                                 )
                             ]),
                             padding=10,
@@ -183,14 +184,14 @@ def main(page: ft.Page):
                                 ft.Text(f"🛠 Nombre: {producto['nombre']}", size=18, weight=ft.FontWeight.BOLD),
                                 ft.Text(f"🔢 Código: {producto['codigo']}"),
                                 ft.ElevatedButton(
-                                    "Copiar código",
-                                    icon=ft.icons.COPY,
+                                    "Seleccionar producto",
+                                    icon=ft.icons.SELECT_ALL,
                                     icon_color=ft.colors.WHITE,
                                     width=400,
                                     height=40,
-                                    bgcolor=ft.colors.AMBER,
+                                    bgcolor=ft.colors.GREEN,
                                     color=ft.colors.WHITE,
-                                    on_click=lambda e, c=producto['codigo']: copiar_al_portapapeles(c)
+                                    on_click=lambda e, c=producto['codigo']: buscar_producto(c)
                                 )
                             ]),
                             padding=10,
@@ -221,7 +222,7 @@ def main(page: ft.Page):
         page.update()
 
     botones = ft.Row([
-        ft.ElevatedButton("Buscar", on_click=buscar_producto, width=180, height=40, icon=ft.icons.SEARCH),
+        ft.ElevatedButton("Buscar", on_click=lambda e: buscar_producto(codigo_input.value.strip()), width=180, height=40, icon=ft.icons.SEARCH),
         ft.ElevatedButton("Buscar por nombre", on_click=lambda e: buscar_por_nombre_inmediato(codigo_input.value), width=180, height=40, icon=ft.icons.SEARCH)
     ], alignment=ft.MainAxisAlignment.CENTER)
     dialogo_busqueda = ft.AlertDialog(
