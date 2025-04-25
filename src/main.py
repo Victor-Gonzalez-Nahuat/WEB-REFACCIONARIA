@@ -1,7 +1,7 @@
 import flet as ft
 import requests
 
-API_URL = "https://api-refaccionaria-production.up.railway.app/producto/"
+API_URL = "https://api-refaccionaria-production-d753.up.railway.app/producto/"
 
 def main(page: ft.Page):
     page.theme_mode = ft.ThemeMode.LIGHT
